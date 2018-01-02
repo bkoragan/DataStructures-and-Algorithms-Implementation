@@ -4,43 +4,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/* Binary Search of an Array - first 25 prime numbers, in order.
+/* Binary Search of an Array.
  * 
  * 
  * */
 public class SearchNumberInArray {
 
-	public static void main(String[] args) {
-		// an array of first 25 prime integers
-		int[] primeArray = new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-		int input = 79;
-		
-		int n = primeArray.length; 
-		int min = 0;
-		int max = n;
-		if(findGuess(primeArray, min, max, input)){
-			System.out.println("number found in array.");
-		}else{
-			System.out.println("number NOT found in array.");
-		}
-	}
+  // Returns either the index of the location in the array,
+  // or -1 if the array did not contain the targetValue
+  public static int doSearch(int[] array, int targetValue) {
+    int min = 0;
+    System.out.println(Arrays.toString(array));
+    int max = array.length - 1;
+    return findNumber(array, max, min, targetValue);
+  }
+  private static int findNumber(int[] array, int max, int min, int input){
+    if(max<min)
+        return -1;
+    int guess = Math.round((max+min)/2);
+    if(array[guess] == input)
+        return guess;
+    else if(array[guess] < input)
+        min = guess + 1;
+    else 
+        max = guess - 1;
+    return findNumber(array, max, min, input);
+  }
 
-	private static boolean findGuess(int[] primeArray, int min, int max, int n) {
-		int guess = Math.round((min + max)/2);
-		if(max < min){
-			return false;
-		}
-		if(primeArray[guess] == n){
-			return true;
-		}
-		if( primeArray[guess] < n){
-			min = guess + 1;
-			return findGuess(primeArray, min, max, n);
-		}else{
-			max = guess - 1;
-			return findGuess(primeArray, min, max, n);
-				
-		}
-	}
-
+	/********** sample inputs tested above code: ****************/
+	// input								output	
+	//doSearch([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 		20
+		//41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97], 73)	
+	//doSearch([22, 44, 66, 88], 88)					3
+	//doSearch([99, 100], 101)						-1
+	/******************* */
 }
